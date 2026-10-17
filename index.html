@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agency Lab · Selector Estratégico de Redes Sociales</title>
+<link rel="icon" href="data:," />
+<style>
+  :root{
+    --bg:#f4f6fb;
+    --surface:#ffffff;
+    --surface-2:#f8fafc;
+    --ink:#172033;
+    --muted:#697386;
+    --line:#e3e8f0;
+    --orange:#ff8a2a;
+    --orange-2:#ffb264;
+    --violet:#5b5bd6;
+    --teal:#17a2a4;
+    --green:#28a56b;
+    --red:#e15b64;
+    --shadow:0 14px 40px rgba(31,41,55,.08);
+    --shadow-soft:0 6px 18px rgba(31,41,55,.06);
+    --radius:22px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    background:
+      radial-gradient(circle at 10% 0%, rgba(91,91,214,.08), transparent 28%),
+      radial-gradient(circle at 90% 0%, rgba(255,138,42,.10), transparent 24%),
+      var(--bg);
+    color:var(--ink);
+  }
+  button,select{font:inherit}
+  .app{
+    max-width:1500px;
+    margin:0 auto;
+    padding:24px;
+  }
+
+  /* Header */
+  .topbar{
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(227,232,240,.9);
+    box-shadow:var(--shadow-soft);
+    border-radius:26px;
+    padding:18px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:18px;
+    position:sticky;
+    top:14px;
+    z-index:20;
+  }
+  .brand{
+    display:flex;
+    gap:14px;
+    align-items:center;
+  }
+  .brandmark{
+    width:46px;height:46px;border-radius:16px;
+    display:grid;place-items:center;
+    color:white;font-weight:900;
+    background:linear-gradient(145deg,var(--violet),#818cf8 55%,var(--orange));
+    box-shadow:0 8px 20px rgba(91,91,214,.22);
+  }
+  .brand h1{
+    font-size:19px;
+    margin:0 0 3px;
+    letter-spacing:-.02em;
+  }
+  .brand p{
+    margin:0;color:var(--muted);font-size:12px;
+  }
+  .status{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+  }
+  .badge{
+    font-size:12px;font-weight:700;
+    padding:8px 11px;border-radius:999px;
+    border:1px solid #e6e8ff;background:#f6f6ff;color:#4c4cb4;
+  }
+  .badge.orange{background:#fff6ec;border-color:#ffe1bf;color:#9a5313}
+
+  /* Hero */
+  .hero{
+    display:grid;
+    grid-template-columns:minmax(0,1.5fr) minmax(0,.7fr);
+    gap:18px;
+    margin:20px 0;
+  }
+  .hero-main{
+    border-radius:28px;
+    padding:18px;
+    color:white;
+    background:
+      radial-gradient(circle at 85% 25%, rgba(255,255,255,.14), transparent 30%),
+      linear-gradient(135deg,#24274d 0%, #4f46a6 55%, #ff8a2a 140%);
+    box-shadow:var(--shadow);
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+  }
+  .eyebrow{
+    font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800;opacity:.78;
+  }
+  .hero-main h2{
+    font-size:26px;line-height:1.15;margin:8px 0 10px;max-width:840px;
+  }
+  .hero-main p{
+    max-width:860px;margin:0;line-height:1.5;font-size:14px;color:#fff;
+  }
+  .hero-steps{
+    display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;
+  }
+  .hero-step{
+    padding:6px 9px;border-radius:999px;font-size:12px;font-weight:700;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .hero-side{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  }
+  .kpi{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:18px;
+    box-shadow:var(--shadow-soft);
+  }
+  .kpi .label{font-size:12px;color:var(--muted);margin-bottom:8px}
+  .kpi .value{font-size:26px;font-weight:900;letter-spacing:-.04em}
+  .kpi .foot{font-size:11px;color:var(--muted);margin-top:5px}
+
+  /* Main grid */
+  .workspace{
+    display:grid;
+    grid-template-columns:420px minmax(0,1fr);
+    gap:18px;
+    align-items:start;
+  }
+  .sidebar{
+    position:sticky;top:106px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow-soft);
+  }
+  .config{padding:20px}
+  .config-title{
+    display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:16px;
+  }
+  .config-title h3{margin:0;font-size:20px}
+  .config-title p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+  .step-num{
+    min-width:36px;height:36px;border-radius:12px;
+    display:grid;place-items:center;
+    background:#f1efff;color:var(--violet);font-weight:900;
+  }
+  .progress{
+    height:7px;background:#edf0f5;border-radius:999px;overflow:hidden;margin:8px 0 18px;
+  }
+  .progress span{
+    display:block;height:100%;width:100%;
+    background:linear-gradient(90deg,var(--violet),var(--orange));
+    border-radius:999px;
+  }
+  .form{
+    display:grid;gap:13px;
+  }
+
+  .objective-intro{
+    margin-bottom:16px;
+    padding:14px;
+    border-radius:18px;
+    background:linear-gradient(135deg,#f7f6ff 0%,#fff7ef 100%);
+    border:1px solid #e6e2ff;
+  }
+  .objective-intro .mini{
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--violet);
+    margin-bottom:5px;
+  }
+  .objective-intro h4{
+    margin:0 0 6px;
+    font-size:15px;
+  }
+  .objective-intro p{
+    margin:0;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.45;
+  }
+  .objective-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:11px;
+  }
+  .objective-card{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:13px;
+    padding:10px;
+    cursor:pointer;
+    text-align:left;
+    min-height:72px;
+    transition:.18s ease;
+  }
+  .objective-card:hover{
+    transform:translateY(-1px);
+    border-color:#cbc8f3;
+    box-shadow:0 5px 14px rgba(91,91,214,.08);
+  }
+  .objective-card.active{
+    border-color:#aaa7ee;
+    background:#f3f1ff;
+    box-shadow:0 5px 14px rgba(91,91,214,.10);
+  }
+  .objective-card .o-title{
+    font-size:11px;
+    font-weight:900;
+    color:#303a50;
+    margin-bottom:3px;
+  }
+  .objective-card .o-desc{
+    font-size:12px;
+    line-height:1.4;
+    color:#566273;
+  }
+  .objective-lens{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .lens{
+    padding:10px 11px;
+    border-radius:13px;
+    background:#fff;
+    border:1px solid #e7eaf1;
+  }
+  .lens .l-label{
+    font-size:11px;
+    color:#566273;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-weight:800;
+    margin-bottom:4px;
+  }
+  .lens .l-value{
+    font-size:11px;
+    font-weight:800;
+    color:#3f4a60;
+    line-height:1.35;
+  }
+
+  .field label{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:7px;font-size:12px;font-weight:800;color:#334057;
+  }
+  .helper{font-size:12px;color:#566273;font-weight:500}
+  select{
+    width:100%;
+    border:1px solid var(--line);
+    background:#fbfcfe;
+    border-radius:14px;
+    padding:12px 13px;
+    color:var(--ink);
+    outline:none;
+    transition:.2s ease;
+  }
+  select:focus{border-color:#b8b9f0;box-shadow:0 0 0 4px rgba(91,91,214,.08)}
+  .segmented{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:7px;
+  }
+  .segmented button{
+    border:1px solid var(--line);
+    background:#fbfcfe;
+    border-radius:12px;
+    padding:10px 7px;
+    cursor:pointer;
+    color:#4b5668;
+    font-size:12px;
+    font-weight:700;
+  }
+  .segmented button.active{
+    color:#3d3ca3;
+    border-color:#c8c8f4;
+    background:#f1f0ff;
+  }
+  .actions{display:grid;grid-template-columns:1fr;gap:8px;margin-top:16px}
+  .btn{
+    border:none;border-radius:14px;padding:12px 14px;cursor:pointer;font-weight:800;font-size:13px;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--violet),#7474ef 55%,var(--orange));
+    color:white;
+    box-shadow:0 8px 18px rgba(91,91,214,.18);
+  }
+  .btn-ghost{background:#f5f7fa;color:#40506a;border:1px solid var(--line)}
+  .quick{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:8px;
+  }
+  .quick button{padding:9px 8px;font-size:11px}
+
+  .coach{
+    margin-top:14px;padding:13px;border-radius:14px;
+    background:#f7f9ff;border:1px solid #e0e6ff;
+    color:#52607c;font-size:12px;line-height:1.5;
+  }
+
+  /* Result area */
+  .content{
+    display:grid;gap:18px;
+  }
+  .tabbar{
+    display:flex;gap:8px;flex-wrap:wrap;
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:18px;padding:7px;box-shadow:var(--shadow-soft);
+  }
+  .tab{
+    border:none;background:transparent;
+    padding:10px 14px;border-radius:12px;
+    color:#667085;font-weight:800;font-size:12px;cursor:pointer;
+  }
+  .tab.active{background:#1f254d;color:white}
+  .tabcontent{display:none}
+  .tabcontent.active{display:block}
+
+  .section-card{padding:20px}
+  .section-head{
+    display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:14px;
+  }
+  .section-head h3{margin:0;font-size:20px}
+  .section-head p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+  .tip{
+    font-size:11px;padding:7px 10px;border-radius:999px;
+    background:#fff6eb;border:1px solid #ffe0bc;color:#975416;font-weight:700;
+  }
+
+  .rank-grid{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+  }
+  .platform-card{
+    padding:16px;border:1px solid var(--line);border-radius:18px;background:#fcfdff;
+    position:relative;overflow:hidden;min-height:210px;
+  }
+  .platform-card.top{
+    border-color:#c9c8f3;
+    background:linear-gradient(180deg,#fbfbff 0%,#fff 100%);
+    box-shadow:0 9px 24px rgba(91,91,214,.10);
+  }
+  .platform-icon{
+    width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
+    font-weight:900;color:white;background:linear-gradient(145deg,var(--violet),var(--orange));
+    margin-bottom:12px;
+  }
+  .platform-title{
+    display:flex;justify-content:space-between;gap:10px;align-items:center;
+  }
+  .platform-title h4{margin:0;font-size:16px}
+  .score{font-weight:900;color:var(--violet)}
+  .platform-role{font-size:12px;color:var(--muted);line-height:1.45;margin-top:7px}
+  .bar{height:7px;background:#edf0f5;border-radius:999px;overflow:hidden;margin:12px 0}
+  .bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--violet),var(--orange))}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px}
+  .pill{font-size:10px;padding:5px 7px;border-radius:999px;background:#f1f4f8;color:#566273;border:1px solid #e3e8f0}
+
+  .summary{
+    background:linear-gradient(180deg,#fbfcff 0%,#f7f9fc 100%);
+    border:1px solid var(--line);
+    border-radius:18px;padding:18px;
+    white-space:pre-wrap;
+    line-height:1.62;
+    color:#435067;font-size:13px;
+  }
+
+  /* Ecosystem */
+  .ecosystem{
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+  }
+  .stage{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:18px;
+    padding:14px;
+    min-height:215px;
+    position:relative;
+  }
+  .stage .num{
+    width:30px;height:30px;border-radius:10px;
+    display:grid;place-items:center;font-weight:900;font-size:12px;
+    background:#f0efff;color:var(--violet);
+    margin-bottom:11px;
+  }
+  .stage h4{margin:0 0 8px;font-size:15px}
+  .stage ul{padding-left:17px;margin:0;color:#617085;font-size:12px;line-height:1.55}
+  .stage:not(:last-child)::after{
+    content:"→";
+    position:absolute;right:-16px;top:50%;
+    transform:translateY(-50%);
+    width:28px;height:28px;border-radius:999px;background:#fff;
+    border:1px solid var(--line);
+    display:grid;place-items:center;color:#9aa3b3;font-weight:900;z-index:2;
+  }
+  .flowline{
+    margin-top:14px;
+    padding:12px 14px;border-radius:14px;
+    background:#1f254d;color:white;font-size:13px;line-height:1.5;
+  }
+
+  /* Matrix */
+  .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px}
+  table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+  th,td{padding:12px 11px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:#f8fafc;color:#667085;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:none}
+  .channel-name{font-weight:900}
+  .channel-score{font-size:10px;color:var(--muted);margin-top:3px}
+
+  /* Presentation tab */
+  .present-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  }
+  .present-block{
+    border:1px solid var(--line);border-radius:18px;padding:16px;background:#fbfcfe;
+  }
+  .present-block h4{margin:0 0 9px;font-size:14px}
+  .present-block ol,.present-block ul{
+    margin:0;padding-left:18px;color:#5d6879;font-size:12px;line-height:1.6;
+  }
+  .prompt{
+    margin-top:14px;background:#fff8f1;border:1px solid #ffd9af;border-radius:18px;padding:16px;
+  }
+  .prompt h4{margin:0 0 8px;font-size:14px}
+  .prompt code{
+    display:block;white-space:pre-wrap;
+    background:white;border:1px solid #ffe5c6;border-radius:13px;
+    padding:12px;font-size:11px;line-height:1.5;color:#6f430f;
+  }
+
+  .footer{margin:22px 0 6px;text-align:center;color:#566273;font-size:11px}
+
+  @media(max-width:1150px){
+    .hero,.workspace{grid-template-columns:1fr}
+    .sidebar{position:static}
+    .rank-grid{grid-template-columns:1fr 1fr}
+    .ecosystem{grid-template-columns:1fr}
+    .stage:not(:last-child)::after{display:none}
+  }
+  @media(max-width:760px){
+    .app{padding:14px}
+    .topbar{position:static}
+    .hero-side{grid-template-columns:1fr 1fr}
+    .rank-grid,.present-grid{grid-template-columns:1fr}
+    .hero-main h2{font-size:22px}
+    .status{display:none}
+  }
+
+  /* Ajustes de lectura, foco y contención sin cambiar la identidad visual. */
+  [hidden]{display:none!important}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+  .workspace>*,.content>*,.hero>*,.platform-card,.stage,.table-wrap,.present-block{min-width:0}
+  .brandmark{flex-shrink:0;color:var(--ink);background:linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)),linear-gradient(145deg,var(--violet),#818cf8 55%,var(--orange))}
+  .eyebrow{opacity:1;font-size:11px}
+  .hero-step{background:rgba(23,32,51,.32)}
+  .kpi{padding:12px}
+  .kpi .label{margin-bottom:4px}
+  .kpi .value{font-size:22px}
+  .kpi .foot{font-size:12px}
+  .objective-card .o-title{font-size:13px;line-height:1.3}
+  .objective-intro p,.lens .l-value{font-size:13px}
+  .objective-intro p{color:#566273}
+  .objective-intro .goal-definition{margin-top:12px;font-weight:600;color:#3f4a60}
+  .field-label{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px;font-size:13px;font-weight:800;color:#334057}
+  .field label{font-size:13px;gap:8px}
+  .helper{text-align:right}
+  .btn,.tab,.segmented button,.quick button{min-height:44px}
+  .btn-primary{color:var(--ink);background:linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)),linear-gradient(135deg,var(--violet),#7474ef 55%,var(--orange))}
+  .btn:hover,.segmented button:hover{filter:brightness(.97);box-shadow:var(--shadow-soft)}
+  button:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--violet);outline-offset:3px}
+  .tabcontent:focus-visible{outline-offset:5px}
+  .priority{font-size:12px;font-weight:800;color:#4c4cb4;margin-bottom:12px}
+  .platform-card:not(.top) .priority{color:#566273}
+  .platform-card.top:nth-child(3){border-color:#ffd9af;background:#fffaf5}
+  .platform-icon{color:var(--ink);background:linear-gradient(rgba(255,255,255,.25),rgba(255,255,255,.25)),linear-gradient(145deg,var(--violet),var(--orange))}
+  .platform-title{align-items:flex-start}
+  .platform-title h4{overflow-wrap:anywhere}
+  .score{white-space:nowrap}
+  .score span{font-size:11px;color:#566273;font-weight:600}
+  .platform-role,.channel-details,.stage-details{font-size:13px;line-height:1.5}
+  .channel-details,.stage-details{margin:14px 0 0;color:#52607c}
+  .channel-details dt,.stage-details dt{font-weight:800;color:#334057;margin-top:9px}
+  .channel-details dd,.stage-details dd{margin:2px 0 0;overflow-wrap:anywhere}
+  .reasons{list-style:none;padding:0;margin:0}
+  .pill{font-size:12px}
+  .rank-divider{grid-column:1/-1;margin:10px 0 0;font-size:14px;font-weight:700;color:#435067}
+  .score-note{font-size:12px;line-height:1.6;color:#52607c;margin:0 0 18px}
+  .stage:not(:last-child)::after{right:-22px}
+  .stage:nth-child(3)::after{display:none}
+  .table-wrap{max-width:100%;overscroll-behavior-x:contain}
+  table tbody th{background:transparent;font-size:12px;letter-spacing:normal;text-transform:none;color:var(--ink)}
+  .channel-score{font-size:12px;font-weight:500}
+  .section-head,.tip{overflow-wrap:anywhere}
+  .section-head p,.present-block ol,.present-block ul{font-size:13px}
+  .prompt code{font-size:12px;overflow-wrap:anywhere}
+  @media(max-width:1350px) and (min-width:1151px){
+    .rank-grid,.ecosystem{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stage:nth-child(3)::after{display:grid}
+    .stage:nth-child(2n)::after{display:none}
+  }
+  @media(max-width:1150px){
+    .hero{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+    .ecosystem{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .stage:not(:last-child)::after{display:none}
+    .objective-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  }
+  @media(max-width:760px){
+    .hero{grid-template-columns:minmax(0,1fr);gap:10px;margin:12px 0}
+    .hero-main{padding:16px;min-height:0}
+    .hero-main p{font-size:13px}
+    .hero-steps{display:none}
+    .hero-step{padding:5px 7px;font-size:11px}
+    .hero-side{gap:8px}
+    .kpi{padding:9px 11px;border-radius:16px;display:flex;gap:5px;align-items:center;justify-content:space-between;min-height:48px}
+    .kpi .label{font-size:11px;margin:0}
+    .kpi .value{font-size:19px;flex-shrink:0}
+    .kpi .foot{display:none}
+    .objective-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .objective-lens{grid-template-columns:minmax(0,1fr)}
+    .config,.section-card{padding:16px}
+    .topbar{padding:14px}
+    .brand{gap:10px}
+    .brand h1{font-size:16px}
+    .ecosystem{grid-template-columns:minmax(0,1fr)}
+    .field label,.field-label{flex-wrap:wrap}
+    .helper{text-align:left}
+    .section-head{gap:8px}
+    .section-head .tip{flex-shrink:0;max-width:85px;border-radius:12px}
+    .tabbar{gap:4px}
+    .tab{padding:10px 11px}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brandmark">S</div>
+      <div>
+        <h1>Agency Lab · Selector Estratégico de Redes</h1>
+        <p>De la audiencia al canal, del canal al cierre</p>
+      </div>
+    </div>
+    <div class="status">
+      <span class="badge">Modo guiado</span>
+      <span class="badge orange">Clase 3 · Canales & conversión</span>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Cómo usar el selector">
+    <div class="hero-main">
+      <div>
+        <div class="eyebrow">Laboratorio de estrategia digital</div>
+        <h2>Del objetivo a la conversión.</h2>
+        <p>
+          Elige 2 canales principales + 1 de apoyo y conecta contenido, CTA, cierre y seguimiento.
+        </p>
+      </div>
+      <div class="hero-steps">
+        <span class="hero-step">1 · Brief</span>
+        <span class="hero-step">2 · Channel Fit</span>
+        <span class="hero-step">3 · Ecosistema</span>
+        <span class="hero-step">4 · Cierre</span>
+        <span class="hero-step">5 · Presentación</span>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="kpi"><div class="label">Canales evaluados</div><div class="value">8</div><div class="foot">con lógica de fit estratégico</div></div>
+      <div class="kpi"><div class="label">Canales a priorizar</div><div class="value">2 + 1</div><div class="foot">dos principales y uno de apoyo</div></div>
+      <div class="kpi"><div class="label">Etapas del ecosistema</div><div class="value">5</div><div class="foot">desde descubrimiento a fidelización</div></div>
+      <div class="kpi"><div class="label">Resultado esperado</div><div class="value">Ruta</div><div class="foot">canal → CTA → aterrizaje → cierre</div></div>
+    </div>
+  </section>
+
+  <div class="workspace">
+    <aside class="sidebar">
+      <div class="card config">
+        <div class="config-title">
+          <div>
+            <h3>Configura tu caso</h3>
+            <p>Elige un objetivo y ajusta el brief. Los resultados se actualizan al cambiar cada dato.</p>
+          </div>
+          <div class="step-num">01</div>
+        </div>
+        <div class="progress" aria-hidden="true"><span></span></div>
+
+        <div class="objective-intro">
+          <div class="mini">Primero define el norte</div>
+          <h4 id="objectiveTitle">¿Cuál es tu objetivo principal de marketing?</h4>
+          <p>Elige una sola prioridad. El caso inicial es un restaurante con objetivo de ventas; puedes cambiarlo o cargar otro ejemplo.</p>
+
+          <div class="objective-grid" id="objectiveGrid" role="group" aria-labelledby="objectiveTitle">
+            <button type="button" class="objective-card" data-goal="awareness">
+              <div class="o-title">Dar a conocer la marca</div>
+              <div class="o-desc">Aumentar notoriedad, alcance y recuerdo de marca.</div>
+            </button>
+            <button type="button" class="objective-card" data-goal="consideracion">
+              <div class="o-title">Generar consideración</div>
+              <div class="o-desc">Educar, demostrar valor y ayudar a comparar.</div>
+            </button>
+            <button type="button" class="objective-card" data-goal="trafico">
+              <div class="o-title">Generar tráfico</div>
+              <div class="o-desc">Mover personas hacia web, tienda, app o ubicación.</div>
+            </button>
+            <button type="button" class="objective-card" data-goal="leads">
+              <div class="o-title">Captar leads</div>
+              <div class="o-desc">Conseguir consultas, datos, cotizaciones o reuniones.</div>
+            </button>
+            <button type="button" class="objective-card active" data-goal="ventas">
+              <div class="o-title">Generar ventas</div>
+              <div class="o-desc">Llevar intención a pedido, compra o cierre comercial.</div>
+            </button>
+            <button type="button" class="objective-card" data-goal="fidelizacion">
+              <div class="o-title">Fidelizar y generar recompra</div>
+              <div class="o-desc">Impulsar recompra, relación y comunidad.</div>
+            </button>
+          </div>
+
+          <input type="hidden" id="goal" value="ventas">
+
+          <p id="goalDefinition" class="goal-definition"></p>
+          <div class="objective-lens">
+            <div class="lens">
+              <div class="l-label">KPI principal</div>
+              <div class="l-value" id="goalKpi">Pedidos, tasa de conversión y ventas</div>
+            </div>
+            <div class="lens">
+              <div class="l-label">Pregunta estratégica</div>
+              <div class="l-value" id="goalQuestion">¿Qué canal reduce mejor la fricción hasta comprar?</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form">
+          <div class="field">
+            <label for="businessType">Tipo de negocio <span class="helper" id="businessTypeHelp">¿Qué vendemos?</span></label>
+            <select id="businessType" aria-describedby="businessTypeHelp">
+              <option value="restaurante">Restaurante / comida</option>
+              <option value="retail">Retail / ecommerce</option>
+              <option value="servicios">Servicios profesionales</option>
+              <option value="educacion">Educación / cursos</option>
+              <option value="hotel">Hotel / turismo</option>
+              <option value="inmobiliaria">Inmobiliaria</option>
+              <option value="automotriz">Automotriz</option>
+              <option value="salud">Salud / bienestar</option>
+              <option value="b2b">B2B / corporativo</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="audience">Audiencia principal <span class="helper" id="audienceHelp">¿Con quién hablamos?</span></label>
+            <select id="audience" aria-describedby="audienceHelp">
+              <option value="familias">Familias</option>
+              <option value="jovenes">Jóvenes 18–24</option>
+              <option value="adultos">Adultos 25–44</option>
+              <option value="profesionales">Profesionales / ejecutivos</option>
+              <option value="empresas">Empresas / decisores B2B</option>
+              <option value="mixta">Mixta</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <div class="field-label" id="visualityLabel">Qué tan visual es la oferta <span class="helper">¿Se entiende al verla?</span></div>
+            <div class="segmented" data-target="visuality" role="group" aria-labelledby="visualityLabel">
+              <button type="button" class="active" data-value="alto">Alta</button>
+              <button type="button" data-value="medio">Media</button>
+              <button type="button" data-value="bajo">Baja</button>
+            </div>
+            <input type="hidden" id="visuality" value="alto">
+          </div>
+
+          <div class="field">
+            <div class="field-label" id="complexityLabel">Complejidad de compra <span class="helper">¿Cuánto debe pensar?</span></div>
+            <div class="segmented" data-target="complexity" role="group" aria-labelledby="complexityLabel">
+              <button type="button" data-value="baja">Baja</button>
+              <button type="button" class="active" data-value="media">Media</button>
+              <button type="button" data-value="alta">Alta</button>
+            </div>
+            <input type="hidden" id="complexity" value="media">
+          </div>
+
+          <div class="field">
+            <div class="field-label" id="urgencyLabel">Urgencia de respuesta <span class="helper">¿Qué tan rápido espera respuesta?</span></div>
+            <div class="segmented" data-target="urgency" role="group" aria-labelledby="urgencyLabel">
+              <button type="button" data-value="baja">Baja</button>
+              <button type="button" class="active" data-value="media">Media</button>
+              <button type="button" data-value="alta">Alta</button>
+            </div>
+            <input type="hidden" id="urgency" value="media">
+          </div>
+
+          <div class="field">
+            <label for="landing">Punto de cierre <span class="helper" id="landingHelp">¿Dónde convierte?</span></label>
+            <select id="landing" aria-describedby="landingHelp">
+              <option value="whatsapp">WhatsApp</option>
+              <option value="web">Sitio web / landing</option>
+              <option value="ecommerce">Tienda ecommerce</option>
+              <option value="app">App</option>
+              <option value="formulario">Formulario / lead form</option>
+              <option value="sucursal">Sucursal / visita física</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" onclick="runRecommendation()">Recalcular estrategia</button>
+          <div class="quick">
+            <button class="btn btn-ghost" onclick="loadExample('campero')">Restaurante</button>
+            <button class="btn btn-ghost" onclick="loadExample('distelsa')">Retail</button>
+            <button class="btn btn-ghost" onclick="loadExample('b2b')">B2B</button>
+          </div>
+        </div>
+
+        <div class="coach">
+          <strong>Tip de agencia:</strong> si un canal puntúa alto pero tu equipo no puede producir el contenido ni responder con la velocidad necesaria, baja su prioridad. La estrategia también debe ser operable.
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="tabbar" role="tablist" aria-label="Resultados de la estrategia">
+        <button class="tab active" data-tab="channels" id="tab-channels" role="tab" aria-controls="channels">Canales</button>
+        <button class="tab" data-tab="ecosystemTab" id="tab-ecosystemTab" role="tab" aria-controls="ecosystemTab">Ecosistema</button>
+        <button class="tab" data-tab="matrixTab" id="tab-matrixTab" role="tab" aria-controls="matrixTab">Matriz</button>
+        <button class="tab" data-tab="presentationTab" id="tab-presentationTab" role="tab" aria-controls="presentationTab">Presentación</button>
+      </div>
+
+      <section id="channels" role="tabpanel" aria-labelledby="tab-channels" tabindex="0" class="tabcontent active">
+        <div class="card section-card">
+          <div class="section-head">
+            <div>
+              <h3>Ranking y prioridad de canales</h3>
+              <p>Empieza con 2 canales principales y 1 de apoyo. El score mide ajuste individual; la prioridad combina funciones: atraer, explicar y conectar con el cierre.</p>
+            </div>
+            <div class="tip">No elija por moda</div>
+          </div>
+          <p class="score-note">Índice orientativo de 0 a 100, no probabilidad de éxito. Rúbrica pedagógica sin validación empírica: objetivo 35%, negocio 20%, audiencia 15%, visualidad 10%, complejidad 8%, urgencia 5% y cierre 7%. En empates internos se prioriza objetivo, audiencia y negocio.</p>
+          <p id="resultStatus" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+          <div id="rankings" class="rank-grid"></div>
+        </div>
+
+        <div class="card section-card">
+          <div class="section-head">
+            <div>
+              <h3>Resumen ejecutivo</h3>
+              <p>Úselo como base para la explicación del equipo.</p>
+            </div>
+          </div>
+          <div id="summary" class="summary"></div>
+        </div>
+      </section>
+
+      <section id="ecosystemTab" role="tabpanel" aria-labelledby="tab-ecosystemTab" tabindex="0" class="tabcontent">
+        <div class="card section-card">
+          <div class="section-head">
+            <div>
+              <h3>Ecosistema de medios y cierre</h3>
+              <p>Sigue las etapas numeradas. Cada una indica canal, trabajo, contenido, CTA, destino y señal. El objetivo define qué cuenta como conversión; un clic no equivale a una venta.</p>
+            </div>
+            <div class="tip">Ruta completa</div>
+          </div>
+          <div id="ecosystem" class="ecosystem"></div>
+          <div class="flowline">
+            Idea clave: una red social no “vende” sola. Forma parte de un sistema que conecta <strong>atención → consideración → conversación → conversión → seguimiento</strong>.
+          </div>
+        </div>
+      </section>
+
+      <section id="matrixTab" role="tabpanel" aria-labelledby="tab-matrixTab" tabindex="0" class="tabcontent">
+        <div class="card section-card">
+          <div class="section-head">
+            <div>
+              <h3>Matriz por canal</h3>
+              <p>La misma estrategia del ranking: función, contenido, CTA y destino. Las alternativas no implican que debas activar más canales. En pantallas pequeñas, desplaza la tabla dentro de este panel.</p>
+            </div>
+          </div>
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Matriz de canales; desplaza horizontalmente si es necesario">
+            <table id="matrixTable">
+              <caption class="sr-only">Dos canales principales, un apoyo y alternativas evaluadas</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Canal</th>
+                  <th scope="col">Rol estratégico</th>
+                  <th scope="col">Contenido</th>
+                  <th scope="col">CTA</th>
+                  <th scope="col">Aterrizaje</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="presentationTab" role="tabpanel" aria-labelledby="tab-presentationTab" tabindex="0" class="tabcontent">
+        <div class="card section-card">
+          <div class="section-head">
+            <div>
+              <h3>Cómo presentar la decisión</h3>
+              <p>La defensa debe demostrar criterio, no solo nombrar plataformas.</p>
+            </div>
+          </div>
+
+          <div class="present-grid">
+            <div class="present-block">
+              <h4>Pitch sugerido de 90 segundos</h4>
+              <ol>
+                <li>Este es nuestro tipo de negocio y audiencia.</li>
+                <li>Este es nuestro objetivo principal de marketing y el KPI principal.</li>
+                <li>Seleccionamos estos dos canales porque ayudan a cumplir ese objetivo.</li>
+                <li>El tercer canal cumple un rol de apoyo.</li>
+                <li>El tráfico aterriza en…</li>
+                <li>El cierre ocurre cuando…</li>
+              </ol>
+            </div>
+            <div class="present-block">
+              <h4>Checklist del profesor</h4>
+              <ul>
+                <li>¿El canal tiene sentido para la audiencia?</li>
+                <li>¿El formato es coherente con la plataforma?</li>
+                <li>¿Existe un CTA claro?</li>
+                <li>¿Hay punto de aterrizaje?</li>
+                <li>¿Existe seguimiento después del clic o mensaje?</li>
+                <li>¿La empresa tiene capacidad para operarlo?</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="prompt">
+            <h4>Prompt de IA para cuestionar la estrategia</h4>
+            <code id="iaPrompt"></code>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">Agency Lab · Social Media Strategy · Clase 3</footer>
+</div>
+
+<script>
+const platforms = {
+  facebook: {name:"Facebook",short:"F",role:"Cobertura, comunidad local, promociones y remarketing",content:"Promociones, carruseles, testimonios, eventos, lives, community posts",cta:"Escríbenos / Reserva / Ver menú / Cotiza",landings:{whatsapp:"WhatsApp",web:"Sitio web",ecommerce:"Tienda",app:"App",formulario:"Formulario",sucursal:"Google Maps / sucursal"}},
+  instagram:{name:"Instagram",short:"I",role:"Marca visual, deseo, consideración y comunidad",content:"Reels, stories, carruseles, UGC, behind the scenes, producto",cta:"Enviar mensaje / Ir al link / Ver catálogo",landings:{whatsapp:"DM o WhatsApp",web:"Link en bio / landing",ecommerce:"Catálogo / tienda",app:"App",formulario:"Link a formulario",sucursal:"Ubicación / mapa"}},
+  tiktok:{name:"TikTok",short:"T",role:"Descubrimiento, alcance y atención temprana",content:"Videos cortos, demostraciones, tendencias adaptadas, storytelling",cta:"Descubre más / Escríbenos / Prueba / Ve al link",landings:{whatsapp:"WhatsApp",web:"Landing / sitio",ecommerce:"Tienda",app:"App",formulario:"Formulario",sucursal:"Cómo llegar / sucursal"}},
+  youtube:{name:"YouTube",short:"Y",role:"Explicación, confianza y contenido evergreen",content:"Tutoriales, comparativos, casos, demostraciones, shorts + videos largos",cta:"Conoce más / Solicita información",landings:{whatsapp:"WhatsApp",web:"Sitio web",ecommerce:"Producto / tienda",app:"App",formulario:"Formulario",sucursal:"Reserva / visita"}},
+  linkedin:{name:"LinkedIn",short:"in",role:"Autoridad, networking y captación B2B",content:"Casos, insights, liderazgo, valor empresarial, testimonios, tendencias",cta:"Agendar reunión / Solicita demo / Conecta",landings:{whatsapp:"WhatsApp (menos común)",web:"Landing B2B",ecommerce:"No prioritario",app:"Demo / software",formulario:"Lead form",sucursal:"Cita / reunión"}},
+  whatsapp:{name:"WhatsApp",short:"W",role:"Conversación, atención, cierre y seguimiento",content:"Catálogo, respuestas rápidas, seguimiento, confirmaciones, posventa",cta:"Escríbenos ahora",landings:{whatsapp:"Cierre directo",web:"Apoyo al sitio",ecommerce:"Soporte al checkout",app:"Soporte / retención",formulario:"Contacto post-form",sucursal:"Confirmar visita"}},
+  google:{name:"Google Business Profile",short:"G",role:"Intención alta, búsquedas locales y prueba social",content:"Reseñas, fotos, horarios, ubicación, FAQs",cta:"Llamar / Cómo llegar / Reservar",landings:{whatsapp:"WhatsApp",web:"Sitio / reserva",ecommerce:"Web / compra",app:"App",formulario:"Reserva / formulario",sucursal:"Visita física"}},
+  pinterest:{name:"Pinterest",short:"P",role:"Inspiración y descubrimiento visual a mediano plazo",content:"Inspiración, colecciones, tableros, ideas visuales, decoración/moda",cta:"Guardar / Explorar / Visitar sitio",landings:{whatsapp:"No prioritario",web:"Sitio / blog",ecommerce:"Producto / ecommerce",app:"App",formulario:"Landing",sucursal:"Sitio web"}}
+};
+
+const businessBoosts={
+  restaurante:{facebook:14,instagram:18,tiktok:12,youtube:2,linkedin:-8,whatsapp:18,google:16,pinterest:2},
+  retail:{facebook:10,instagram:16,tiktok:14,youtube:6,linkedin:-6,whatsapp:10,google:6,pinterest:10},
+  servicios:{facebook:6,instagram:6,tiktok:2,youtube:10,linkedin:8,whatsapp:16,google:10,pinterest:-6},
+  educacion:{facebook:6,instagram:10,tiktok:10,youtube:14,linkedin:8,whatsapp:14,google:6,pinterest:0},
+  hotel:{facebook:10,instagram:18,tiktok:10,youtube:8,linkedin:-4,whatsapp:12,google:16,pinterest:10},
+  inmobiliaria:{facebook:12,instagram:10,tiktok:4,youtube:12,linkedin:8,whatsapp:16,google:10,pinterest:4},
+  automotriz:{facebook:10,instagram:10,tiktok:4,youtube:12,linkedin:6,whatsapp:16,google:8,pinterest:-4},
+  salud:{facebook:8,instagram:8,tiktok:0,youtube:10,linkedin:4,whatsapp:16,google:14,pinterest:-4},
+  b2b:{facebook:0,instagram:0,tiktok:-2,youtube:10,linkedin:20,whatsapp:10,google:6,pinterest:-8}
+};
+const audienceBoosts={
+  familias:{facebook:12,instagram:8,tiktok:0,youtube:6,linkedin:-4,whatsapp:10,google:8,pinterest:0},
+  jovenes:{facebook:0,instagram:12,tiktok:18,youtube:8,linkedin:-6,whatsapp:6,google:2,pinterest:2},
+  adultos:{facebook:8,instagram:10,tiktok:4,youtube:6,linkedin:2,whatsapp:10,google:6,pinterest:0},
+  profesionales:{facebook:2,instagram:6,tiktok:0,youtube:8,linkedin:12,whatsapp:8,google:6,pinterest:0},
+  empresas:{facebook:-4,instagram:0,tiktok:-6,youtube:8,linkedin:20,whatsapp:10,google:8,pinterest:-8},
+  mixta:{facebook:8,instagram:8,tiktok:6,youtube:6,linkedin:4,whatsapp:10,google:6,pinterest:0}
+};
+
+// Rúbrica pedagógica explícita: cada criterio aporta una parte fija del total.
+// Son supuestos para discutir en clase, no datos de rendimiento ni probabilidades.
+// No se normaliza contra otros canales: el máximo y mínimo no se fuerzan por caso.
+const weights={goal:35,business:20,audience:15,visuality:10,complexity:8,urgency:5,landing:7};
+const goalFit={
+  awareness:{facebook:8,instagram:9,tiktok:10,youtube:8,linkedin:7,whatsapp:2,google:4,pinterest:7},
+  consideracion:{facebook:7,instagram:8,tiktok:6,youtube:10,linkedin:9,whatsapp:6,google:7,pinterest:6},
+  trafico:{facebook:8,instagram:7,tiktok:6,youtube:8,linkedin:8,whatsapp:4,google:9,pinterest:9},
+  leads:{facebook:8,instagram:7,tiktok:5,youtube:9,linkedin:10,whatsapp:7,google:7,pinterest:4},
+  ventas:{facebook:8,instagram:9,tiktok:7,youtube:6,linkedin:6,whatsapp:10,google:9,pinterest:6},
+  fidelizacion:{facebook:9,instagram:8,tiktok:4,youtube:6,linkedin:7,whatsapp:10,google:5,pinterest:5}
+};
+const goalMeta={
+  awareness:{label:'Dar a conocer la marca',definition:'Lograr que nuevas personas reconozcan y recuerden la marca.',kpi:'Alcance en la audiencia objetivo',signals:'Impresiones y búsquedas de marca',question:'¿Dónde podemos generar atención y recuerdo en la audiencia correcta?',focus:'presentar el beneficio de la marca',conversion:'una persona de la audiencia objetivo expuesta al contenido',cta:'Conoce la marca'},
+  consideracion:{label:'Generar consideración',definition:'Explicar el valor de la oferta y reducir dudas antes de decidir.',kpi:'Guardados de contenido explicativo',signals:'Demostraciones completadas y consultas con intención',question:'¿Qué canal ayuda mejor a explicar, demostrar y reducir dudas?',focus:'demostrar valor y resolver objeciones',conversion:'un guardado de contenido explicativo; es una señal de interés, no una compra',cta:'Mira cómo funciona'},
+  trafico:{label:'Generar tráfico',definition:'Llevar visitas cualificadas a un destino concreto.',kpi:'Visitas cualificadas al destino',signals:'Clics y tasa de clics; definir qué visita es cualificada',question:'¿Qué canal puede llevar usuarios cualificados al siguiente punto?',focus:'dar una razón concreta para visitar el destino',conversion:'una visita al destino que cumple el criterio de calidad definido',cta:'Visita el destino'},
+  leads:{label:'Captar leads',definition:'Obtener un contacto con interés y permiso para continuar la conversación.',kpi:'Leads cualificados',signals:'Tasa de lead y coste por lead si hay pauta',question:'¿Qué canal facilita obtener un contacto con interés real?',focus:'mostrar un caso y ofrecer una consulta',conversion:'un contacto que deja sus datos y cumple el perfil de cliente',cta:'Solicita información'},
+  ventas:{label:'Generar ventas',definition:'Transformar el interés en un pedido o una compra confirmada.',kpi:'Compras o pedidos confirmados',signals:'Tasa de conversión e ingresos',question:'¿Qué canal reduce mejor la fricción hasta comprar?',focus:'mostrar la oferta y facilitar la compra',conversion:'un pedido o una compra confirmada; un clic no es una venta',cta:'Compra o haz tu pedido'},
+  fidelizacion:{label:'Fidelizar y generar recompra',definition:'Mantener la relación con clientes actuales y facilitar que vuelvan.',kpi:'Tasa de recompra',signals:'Retención y recurrencia de clientes',question:'¿Qué canal permite sostener la relación después de la primera compra?',focus:'ayudar a clientes actuales a volver',conversion:'una nueva compra de un cliente existente',cta:'Vuelve a elegirnos'}
+};
+// Afinidad 0–1 por criterio, en el mismo orden estable de las ocho plataformas.
+const channelKeys=Object.keys(platforms);
+const fitRow=values=>Object.fromEntries(channelKeys.map((key,i)=>[key,values[i]]));
+const visualFit={alto:fitRow([.7,1,1,.85,.5,.35,.65,1]),medio:fitRow([.85,.85,.7,.9,.7,.65,.75,.7]),bajo:fitRow([.65,.5,.35,.75,1,1,.9,.35])};
+const complexityFit={baja:fitRow([.9,1,.95,.5,.45,.7,.8,.8]),media:fitRow([.85,.85,.65,.9,.8,.85,.85,.65]),alta:fitRow([.65,.65,.4,1,1,1,.9,.55])};
+const urgencyFit={baja:fitRow([.65,.65,.7,1,.8,.6,.7,1]),media:fitRow([.85,.85,.7,.75,.7,.85,.85,.6]),alta:fitRow([.95,.95,.65,.4,.6,1,1,.3])};
+const landingFit={whatsapp:fitRow([.9,.9,.75,.65,.55,1,.95,.4]),web:fitRow([.85,.8,.7,.95,.95,.65,.95,.95]),ecommerce:fitRow([.9,1,.85,.8,.45,.7,.7,1]),app:fitRow([.85,.9,.9,.9,.75,.65,.55,.6]),formulario:fitRow([.9,.75,.6,.95,1,.65,.75,.55]),sucursal:fitRow([.95,.9,.65,.6,.65,.9,1,.5])};
+const landingNames={whatsapp:'WhatsApp',web:'Sitio web / landing',ecommerce:'Tienda ecommerce',app:'App',formulario:'Formulario / lead form',sucursal:'Sucursal / visita física'};
+const topics={restaurante:'menú, experiencia y pedidos',retail:'productos, comparaciones y compra',servicios:'servicios, resultados y cotización',educacion:'programas, aprendizaje e inscripción',hotel:'estancia, experiencias y reserva',inmobiliaria:'propiedades, recorridos y visita',automotriz:'vehículos, demostraciones y cotización',salud:'servicios de salud, proceso de atención y cita',b2b:'problemas del negocio, casos y demostración'};
+const formats={facebook:'Publicación de comunidad o carrusel',instagram:'Reel, stories o carrusel',tiktok:'Video corto con demostración',youtube:'Video explicativo o comparativo',linkedin:'Caso empresarial o publicación de conocimiento',whatsapp:'Respuesta útil y mensaje de seguimiento con permiso',google:'Fotos, reseñas y ficha local actualizada',pinterest:'Pin visual enlazado a contenido útil'};
+const limitations={facebook:'Necesita una comunidad pertinente y atención constante; el alcance no garantiza resultados.',instagram:'Requiere producción visual constante; hay que reducir pasos entre contenido y destino.',tiktok:'La atención no implica intención de compra; valida audiencia y acceso al enlace.',youtube:'Producir explicaciones útiles requiere tiempo; no suele resolver urgencias por sí solo.',linkedin:'Exige una oferta y una audiencia profesionales; no asumir que sirve a todo negocio.',whatsapp:'Necesita capacidad de respuesta y permiso de contacto; no sustituye la captación de audiencia nueva.',google:'Úsalo solo si el negocio es elegible y tiene presencia o atención local; valida este supuesto.',pinterest:'Funciona mejor con búsquedas visuales y planificación; no es un canal de respuesta inmediata.'};
+
+function val(id){return document.getElementById(id).value;}
+function label(id){return document.getElementById(id).selectedOptions[0].textContent;}
+function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+function computeScores(){
+  const d=Object.fromEntries(['businessType','goal','visuality','complexity','urgency','landing','audience'].map(id=>[id,val(id)]));
+  d.raw={};d.scores={};d.criteria={};
+  for(const key of channelKeys){
+    // Las afinidades de negocio y audiencia conservan los criterios del archivo
+    // original, transformados a una escala fija, sin ventajas base por plataforma.
+    const criteria={goal:goalFit[d.goal][key]/10,business:.5+businessBoosts[d.businessType][key]/40,audience:.5+audienceBoosts[d.audience][key]/40,visuality:visualFit[d.visuality][key],complexity:complexityFit[d.complexity][key],urgency:urgencyFit[d.urgency][key],landing:landingFit[d.landing][key]};
+    d.criteria[key]=criteria;
+    d.raw[key]=Object.entries(weights).reduce((sum,[criterion,weight])=>sum+criteria[criterion]*weight,0);
+    d.scores[key]=Math.round(d.raw[key]);
+  }
+  return d;
+}
+function rankKeys(d){
+  // Se ordena ANTES de redondear. En un empate exacto, primero objetivo,
+  // después audiencia y negocio; el nombre solo garantiza un orden estable final.
+  return [...channelKeys].sort((a,b)=>d.raw[b]-d.raw[a]||d.criteria[b].goal-d.criteria[a].goal||d.criteria[b].audience-d.criteria[a].audience||d.criteria[b].business-d.criteria[a].business||platforms[a].name.localeCompare(platforms[b].name,'es'));
+}
+function selectChannels(d){
+  const ranked=rankKeys(d);
+  // Un portafolio combina funciones. WhatsApp apoya la conversación/cierre;
+  // no ocupa automáticamente una plaza de captación por tener buen score.
+  // En fidelización sí puede ser principal porque se trabaja con clientes actuales.
+  const first=ranked.find(key=>key!=='whatsapp'||d.goal==='fidelizacion');
+  const second=ranked.find(key=>key!==first&&key!=='whatsapp');
+  const needsConversation=['leads','ventas','fidelizacion'].includes(d.goal)||d.landing==='whatsapp';
+  const support=needsConversation&&first!=='whatsapp'?'whatsapp':ranked.find(key=>key!==first&&key!==second);
+  return [first,second,support];
+}
+function reasoning(key,d){
+  const texts={goal:`Ayuda a ${goalMeta[d.goal].label.toLowerCase()}`,business:`Encaja con ${label('businessType').toLowerCase()}`,audience:`Afinidad con ${label('audience').toLowerCase()}`,visuality:`Adapta su formato a visualidad ${d.visuality==='alto'?'alta':d.visuality==='bajo'?'baja':'media'}`,complexity:`Permite abordar una compra de complejidad ${d.complexity}`,urgency:`Se ajusta a una urgencia ${d.urgency}`,landing:`Conecta con ${landingNames[d.landing]}`};
+  return Object.entries(d.criteria[key]).filter(([,fit])=>fit>=.7).sort((a,b)=>(b[1]-.5)*weights[b[0]]-(a[1]-.5)*weights[a[0]]).slice(0,3).map(([criterion])=>texts[criterion]);
+}
+function channelDetail(key,d){
+  const goal=goalMeta[d.goal];
+  let cta=goal.cta;
+  if(d.goal==='trafico')cta={whatsapp:'Consulta por WhatsApp',web:'Visita el sitio',ecommerce:'Explora la tienda',app:'Abre la app',formulario:'Visita el formulario',sucursal:'Consulta cómo llegar'}[d.landing];
+  if(d.goal==='leads')cta=d.businessType==='b2b'?'Solicita una reunión':d.landing==='whatsapp'?'Consulta y deja tus datos':'Solicita información';
+  if(d.goal==='ventas'||d.goal==='fidelizacion')cta={whatsapp:'Haz tu pedido por WhatsApp',web:'Consulta la oferta y compra',ecommerce:'Compra en la tienda',app:'Compra desde la app',formulario:d.businessType==='b2b'?'Solicita una propuesta':'Solicita una cotización',sucursal:'Visítanos y compra'}[d.landing];
+  const direct=['whatsapp','web','ecommerce','app','sucursal'].includes(d.landing);
+  let destination=landingNames[d.landing];
+  if(key==='whatsapp'&&d.landing!=='whatsapp')destination=`Conversación en WhatsApp → ${destination}`;
+  if(key==='instagram'&&d.landing!=='whatsapp')destination=`Enlace del perfil → ${destination}`;
+  if(key==='tiktok')destination=`Enlace disponible en el perfil → ${destination}`;
+  if(key==='pinterest'&&d.landing==='whatsapp')destination='Página informativa con enlace a WhatsApp';
+  let role=`${platforms[key].role}. En este caso: ${goal.focus}.`;
+  if(key==='whatsapp')role=d.goal==='fidelizacion'?'Relación con clientes actuales y activación de recompra con permiso.':`Apoyo de conversación, resolución de dudas y ${d.goal==='leads'?'calificación del contacto':'seguimiento del interés'}; recibe la demanda desde otros canales.`;
+  const limit=limitations[key]+((d.goal==='ventas'&&!direct)?' El formulario inicia una oportunidad; la venta se confirma después.':'');
+  const reasons=reasoning(key,d);
+  return {key,name:platforms[key].name,score:d.scores[key],raw:d.raw[key],role,reasons:reasons.length?reasons:['Alternativa de apoyo; valida su encaje antes de invertir'],limitation:limit,content:`${formats[key]} sobre ${topics[d.businessType]}, para ${goal.focus}.`,cta,destination};
+}
+function buildRecommendation(d){
+  const selected=selectChannels(d);
+  const ordered=[...selected,...rankKeys(d).filter(key=>!selected.includes(key))];
+  const channels=ordered.map(key=>channelDetail(key,d));
+  // Este objeto alimenta TODAS las vistas: evita desacuerdos entre ranking,
+  // matriz, ecosistema, resumen ejecutivo y prompt de IA.
+  const recommendation={...d,selected,channels};
+  recommendation.stages=ecosystemSteps(recommendation);
+  return recommendation;
+}
+function ecosystemSteps(d){
+  const chosen=d.selected;
+  const discoveryAbility={facebook:8,instagram:9,tiktok:10,youtube:8,linkedin:8,whatsapp:0,google:6,pinterest:8};
+  const considerationAbility={facebook:7,instagram:8,tiktok:5,youtube:10,linkedin:9,whatsapp:4,google:7,pinterest:6};
+  const choose=(ability,exclude=[])=>[...chosen].filter(key=>!exclude.includes(key)).sort((a,b)=>(ability[b]*5+d.raw[b])-(ability[a]*5+d.raw[a]))[0];
+  const discovery=choose(discoveryAbility,['whatsapp']);
+  const consideration=choose(considerationAbility,['whatsapp',discovery]);
+  const conversation=chosen.includes('whatsapp')?'whatsapp':chosen.find(key=>['facebook','instagram','linkedin'].includes(key))||consideration;
+  const channel=key=>d.channels.find(item=>item.key===key);
+  const lead=channel(discovery),explain=channel(consideration),talk=channel(conversation);
+  const close=landingNames[d.landing];
+  const closeContent={whatsapp:'Pedido o consulta con datos claros, respuesta y confirmación.',web:'Página coherente con la promesa del contenido y una acción principal.',ecommerce:'Ficha de producto, precio, envío y checkout sin pasos innecesarios.',app:'Pantalla de la oferta, acceso y proceso de compra o registro.',formulario:d.businessType==='b2b'?'Formulario breve, calificación del contacto y propuesta de reunión.':'Formulario breve, permiso de contacto y confirmación de recepción.',sucursal:'Ubicación, horarios, disponibilidad y atención en el punto de venta.'}[d.landing];
+  const closeAction=['awareness','consideracion','trafico'].includes(d.goal)?{awareness:'Conoce la propuesta y elige si quieres continuar',consideracion:'Revisa los detalles y resuelve tus dudas',trafico:'Visita el destino y explora la información'}[d.goal]:{whatsapp:d.goal==='leads'?'Deja tus datos y explica tu necesidad':'Confirma tu pedido o consulta',web:d.goal==='leads'?'Solicita información en la página':'Completa la acción de la página',ecommerce:d.goal==='leads'?'Consulta sobre el producto':'Confirma tu compra',app:d.goal==='leads'?'Deja tus datos para recibir información':'Completa la acción en la app',formulario:d.businessType==='b2b'?'Envía tus datos para agendar una reunión':'Envía tu solicitud',sucursal:d.goal==='leads'?'Solicita asesoría y deja tus datos':'Visítanos y confirma tu compra'}[d.landing];
+  const closeSignal={whatsapp:'Pedidos confirmados / conversaciones con intención',web:'Acciones completadas / visitas a la página',ecommerce:'Compras confirmadas / inicios de checkout',app:'Acciones completadas / sesiones en la oferta',formulario:'Leads cualificados / formularios recibidos',sucursal:'Compras confirmadas y visitas atribuibles cuando puedan medirse'}[d.landing];
+  const followup=chosen.includes('whatsapp')?'WhatsApp con permiso':'CRM / base de contactos con permiso';
+  const next=d.businessType==='b2b'?'Calificar el lead → proponer reunión → registrar el resultado comercial.':'Confirmar atención → resolver dudas → registrar el resultado.';
+  const goal=goalMeta[d.goal];
+  const completion=['awareness','consideracion','trafico'].includes(d.goal)?`Para este objetivo, la conversión es ${goal.conversion}. Una compra puede ser un resultado posterior.`:`La conversión se confirma cuando hay ${goal.conversion}.`;
+  return [
+    {title:'Descubrimiento',channel:lead.name,job:d.goal==='fidelizacion'?'Reactivar el interés de clientes y comunidad; no asumir captación nueva.':'Presentar el problema o beneficio a la audiencia pertinente.',content:lead.content,cta:d.goal==='fidelizacion'?'Descubre qué hay para ti':'Conoce la propuesta',destination:`Contenido de consideración en ${explain.name}`,kpi:d.goal==='fidelizacion'?'Clientes que vuelven a interactuar':'Alcance en la audiencia objetivo'},
+    {title:'Consideración',channel:explain.name,job:'Explicar, aportar prueba y resolver objeciones.',content:explain.content,cta:d.goal==='leads'?'Consulta si encaja con tu negocio':'Consulta los detalles',destination:`Conversación en ${talk.name}`,kpi:'Guardados, demostraciones completadas y consultas con intención'},
+    {title:'Conversación',channel:talk.name,job:'Responder, entender la necesidad y orientar al siguiente paso.',content:d.businessType==='b2b'?'Preguntas de necesidad, caso relevante y propuesta de reunión.':'Respuestas sobre precio, disponibilidad, condiciones y siguiente paso.',cta:talk.cta,destination:close,kpi:d.goal==='leads'?'Contactos que cumplen el perfil / consultas recibidas':'Conversaciones atendidas y clics al punto de cierre'},
+    {title:'Cierre',channel:close,job:`Completar la acción elegida. ${completion}`,content:closeContent,cta:closeAction,destination:d.landing==='formulario'?`Contacto comercial. ${next}`:'Confirmación de la acción y registro para seguimiento.',kpi:`${goal.kpi}. Señal del punto de cierre: ${closeSignal}.`},
+    {title:'Seguimiento',channel:followup,job:d.goal==='leads'?'Convertir el contacto cualificado en una siguiente conversación comercial.':d.goal==='fidelizacion'?'Ayudar al cliente a volver y medir su recompra.':'Sostener la relación después de una consulta o compra.',content:d.goal==='leads'?next:'Confirmación, ayuda pertinente y recordatorio, solo si la persona deja su contacto y da permiso.',cta:d.goal==='leads'?(d.businessType==='b2b'?'Confirma tu reunión':'Responde para continuar tu consulta'):['ventas','fidelizacion'].includes(d.goal)?'Consulta o vuelve a comprar':'Responde si quieres conocer más',destination:d.goal==='leads'&&d.businessType==='b2b'?'Reunión y oportunidad registrada en CRM.':`Atención o nueva acción en ${close}.`,kpi:d.goal==='leads'?'Reuniones realizadas / leads cualificados':['ventas','fidelizacion'].includes(d.goal)?'Tasa de recompra y retención; no solo mensajes enviados':'Contactos con permiso que continúan la relación; medir el objetivo por separado'}
+  ];
+}
+function renderRankings(d){
+  document.getElementById('rankings').innerHTML=d.channels.map((p,i)=>`${i===3?'<p class="rank-divider">Otras alternativas evaluadas · no es necesario activarlas todas</p>':''}<article class="platform-card${i<3?' top':''}">
+    <div class="priority">${i<2?`Principal ${i+1}`:i===2?'Canal de apoyo':'Alternativa'}</div>
+    <div class="platform-icon" aria-hidden="true">${platforms[p.key].short}</div>
+    <div class="platform-title"><h4>${escapeHTML(p.name)}</h4><div class="score"><span class="sr-only">Ajuste orientativo </span>${p.score}<span>/100</span></div></div>
+    <div class="platform-role">${escapeHTML(p.role)}</div>
+    <div class="bar" aria-hidden="true"><span style="width:${p.score}%"></span></div>
+    <ul class="pillrow reasons">${p.reasons.map(reason=>`<li class="pill">${escapeHTML(reason)}</li>`).join('')}</ul>
+    <dl class="channel-details"><dt>Contenido</dt><dd>${escapeHTML(p.content)}</dd><dt>CTA</dt><dd>${escapeHTML(p.cta)}</dd><dt>Aterrizaje</dt><dd>${escapeHTML(p.destination)}</dd><dt>Consideración</dt><dd>${escapeHTML(p.limitation)}</dd></dl>
+    </article>`).join('');
+}
+function renderEcosystem(d){
+  document.getElementById('ecosystem').innerHTML=d.stages.map((s,i)=>`<article class="stage"><div class="num" aria-hidden="true">${i+1}</div><h4>${i+1}. ${escapeHTML(s.title)}</h4><dl class="stage-details">${[['Canal',s.channel],['Trabajo',s.job],['Contenido',s.content],['CTA',s.cta],['Destino',s.destination],['Señal / KPI',s.kpi]].map(([name,value])=>`<dt>${name}</dt><dd>${escapeHTML(value)}</dd>`).join('')}</dl></article>`).join('');
+}
+function renderTable(d){
+  document.querySelector('#matrixTable tbody').innerHTML=d.channels.map((p,i)=>`<tr><th scope="row"><div class="channel-name">${escapeHTML(p.name)}</div><div class="channel-score">${i<2?`Principal ${i+1}`:i===2?'Apoyo':'Alternativa'} · ${p.score}/100</div></th><td>${escapeHTML(p.role)}</td><td>${escapeHTML(p.content)}</td><td>${escapeHTML(p.cta)}</td><td>${escapeHTML(p.destination)}</td></tr>`).join('');
+}
+function renderSummary(d){
+  const goal=goalMeta[d.goal];
+  document.getElementById('summary').textContent=`RECOMENDACIÓN · 2 PRINCIPALES + 1 APOYO
+Principal 1: ${platforms[d.selected[0]].name}
+Principal 2: ${platforms[d.selected[1]].name}
+Apoyo: ${platforms[d.selected[2]].name}
+
+CRITERIO
+• Negocio: ${label('businessType')}
+• Objetivo: ${goal.label}. ${goal.definition}
+• KPI principal: ${goal.kpi}
+• Señales de apoyo: ${goal.signals}
+• Audiencia: ${label('audience')}
+• Visualidad: ${labelSegment('visuality')} · Complejidad: ${d.complexity} · Urgencia: ${d.urgency}
+• Punto de cierre: ${landingNames[d.landing]}
+
+RUTA
+${d.stages.map((stage,i)=>`${i+1}. ${stage.title} · ${stage.channel}: ${stage.cta} → ${stage.destination}`).join('\n')}
+
+CONVERSIÓN
+${goal.conversion[0].toUpperCase()+goal.conversion.slice(1)}.
+${d.landing==='formulario'&&d.goal==='ventas'?'El formulario no confirma una venta: hay que registrar el cierre comercial posterior.\n':''}
+DECISIÓN
+Los dos principales construyen demanda y confianza; el apoyo conecta la siguiente acción. En fidelización se parte de clientes actuales. El score mide ajuste individual; la prioridad combina funciones complementarias. No hace falta estar en todas las redes.
+Valida audiencia real, recursos, elegibilidad local y capacidad de respuesta antes de invertir.`;
+}
+function refreshPrompt(d){
+  document.getElementById('iaPrompt').textContent=`Actúa como director de estrategia de una agencia de social media. Audita esta selección pedagógica sin asumir que los scores son resultados reales:
+- Negocio: ${label('businessType')}
+- Objetivo de marketing: ${goalMeta[d.goal].label}
+- KPI principal: ${goalMeta[d.goal].kpi}
+- Audiencia: ${label('audience')}
+- Visualidad: ${labelSegment('visuality')}
+- Complejidad: ${d.complexity}
+- Urgencia: ${d.urgency}
+- Punto de cierre: ${landingNames[d.landing]}
+
+SELECCIÓN REAL
+${d.channels.slice(0,3).map((p,i)=>`${i<2?`Principal ${i+1}`:'Apoyo'}: ${p.name} (${p.score}/100 orientativo).
+Rol: ${p.role}
+Razones: ${p.reasons.join('; ')}.
+Contenido: ${p.content}
+CTA: ${p.cta}
+Destino: ${p.destination}
+Limitación: ${p.limitation}`).join('\n\n')}
+
+ECOSISTEMA
+${d.stages.map(s=>`${s.title}: ${s.channel}. Trabajo: ${s.job} Contenido: ${s.content} CTA: ${s.cta}. Destino: ${s.destination} Señal/KPI: ${s.kpi}`).join('\n')}
+
+SUPUESTOS DEL MODELO
+Rúbrica sin validación empírica: objetivo 35%, negocio 20%, audiencia 15%, visualidad 10%, complejidad 8%, urgencia 5% y cierre 7%. La prioridad combina funciones; puede diferir del orden de scores. Google Business Profile requiere validar elegibilidad y atención local. WhatsApp requiere permiso y capacidad de respuesta.
+
+Evalúa si los canales coinciden con la audiencia, si cada rol y formato es coherente, si CTA y destino se conectan y si existe conversión y seguimiento medible. Cuestiona la capacidad operativa y el riesgo de dispersión. No inventes datos; señala supuestos por validar.`;
+}
+function labelSegment(id){const value=val(id);return id==='visuality'?{alto:'alta',medio:'media',bajo:'baja'}[value]:value;}
+function runRecommendation(){
+  const recommendation=buildRecommendation(computeScores());
+  renderRankings(recommendation);renderEcosystem(recommendation);renderTable(recommendation);renderSummary(recommendation);refreshPrompt(recommendation);
+  document.getElementById('resultStatus').textContent=`Estrategia actualizada para ${goalMeta[recommendation.goal].label.toLowerCase()}. Dos canales principales y uno de apoyo.`;
+}
+// Toda selección, manual o precargada, pasa por los mismos setters para que
+// valores, clases y estado anunciado por tecnologías de apoyo coincidan.
+function setSegment(target,value){
+  document.querySelectorAll(`.segmented[data-target="${target}"] button`).forEach(button=>{const selected=button.dataset.value===value;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));});
+  document.getElementById(target).value=value;
+}
+function setObjective(value){
+  document.querySelectorAll('.objective-card').forEach(button=>{const selected=button.dataset.goal===value;button.classList.toggle('active',selected);button.setAttribute('aria-pressed',String(selected));});
+  document.getElementById('goal').value=value;
+  const goal=goalMeta[value];
+  document.getElementById('goalKpi').textContent=goal.kpi;
+  document.getElementById('goalQuestion').textContent=goal.question;
+  document.getElementById('goalDefinition').textContent=goal.definition;
+}
+function loadExample(type){
+  const examples={campero:{businessType:'restaurante',goal:'ventas',visuality:'alto',complexity:'baja',urgency:'alta',landing:'whatsapp',audience:'familias'},distelsa:{businessType:'retail',goal:'ventas',visuality:'alto',complexity:'media',urgency:'media',landing:'ecommerce',audience:'adultos'},b2b:{businessType:'b2b',goal:'leads',visuality:'bajo',complexity:'alta',urgency:'media',landing:'formulario',audience:'empresas'}};
+  const example=examples[type];
+  if(!example)return;
+  ['businessType','landing','audience'].forEach(id=>{document.getElementById(id).value=example[id];});
+  ['visuality','complexity','urgency'].forEach(id=>setSegment(id,example[id]));
+  setObjective(example.goal);runRecommendation();
+}
+function activateTab(tab,focus=false){
+  document.querySelectorAll('.tab').forEach(item=>{const active=item===tab;item.classList.toggle('active',active);item.setAttribute('aria-selected',String(active));item.tabIndex=active?0:-1;const panel=document.getElementById(item.dataset.tab);panel.classList.toggle('active',active);panel.hidden=!active;});
+  if(focus)tab.focus();
+}
+document.querySelectorAll('.objective-card').forEach(button=>button.addEventListener('click',()=>{setObjective(button.dataset.goal);runRecommendation();}));
+document.querySelectorAll('.segmented button').forEach(button=>button.addEventListener('click',()=>{setSegment(button.parentElement.dataset.target,button.dataset.value);runRecommendation();}));
+document.querySelectorAll('.tab').forEach((tab,index)=>{
+  tab.addEventListener('click',()=>activateTab(tab));
+  tab.addEventListener('keydown',event=>{
+    const tabs=[...document.querySelectorAll('.tab')];let next=index;
+    if(event.key==='ArrowRight')next=(index+1)%tabs.length;
+    else if(event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;
+    else if(event.key==='Home')next=0;
+    else if(event.key==='End')next=tabs.length-1;
+    else return;
+    event.preventDefault();activateTab(tabs[next],true);
+  });
+});
+['businessType','landing','audience'].forEach(id=>document.getElementById(id).addEventListener('change',runRecommendation));
+setObjective(val('goal'));
+['visuality','complexity','urgency'].forEach(id=>setSegment(id,val(id)));
+activateTab(document.querySelector('.tab.active'));
+runRecommendation();
+</script>
+</body>
+</html>
